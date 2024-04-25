@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+ 
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.pumpkin.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.colors.min.css" />
+    <link rel="stylesheet" href="./css/style.css">
+    <meta name="color-scheme" content="light dark" />
+    <title>Jogadores</title>
+</head>
+ 
+<body>
+ 
+    <main class="container">
+        <nav>
+            <ul>
+                <li>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                        class="lucide lucide-trophy">
+                        <path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6" />
+                        <path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18" />
+                        <path d="M4 22h16" />
+                        <path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22" />
+                        <path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22" />
+                        <path d="M18 2H6v7a6 6 0 0 0 12 0V2Z" />
+                    </svg>
+                    <strong>Jogadores</strong>
+                </li>
+            </ul>
+            <ul>
+                <li><a href="/futstats/index.html">Lista</a></li>
+                <li><a href="/futstats/cadastrar.html">Cadastrar</a></li>
+            </ul>
+        </nav>
+ 
+        <section>
+ 
+            <article class="form">
+                <h3>Cadastrar Jogador</h3>
+                <input type="text" name="nome" placeholder="nome" id="nome" />
+                <input type="text" name="time" placeholder="time" id="time" />
+                <input type="number" name="gols" placeholder="gols" id="gols" />
+                <button id="btnIncrementGols" onclick="incrementGols()">+</button>
+                <button id="btnDecrementGols" onclick="decrementGols()">-</button>
+                <input type="number" name="assistencias" placeholder="assistencias" id="assistencias" />
+                <button id="btnIncrementAssistencias" onclick="incrementAssistencias()">+</button>
+                <button id="btnDecrementAssistencias" onclick="decrementAssistencias()">-</button>
+                <input type="text" name="foto" placeholder="url da foto" id="foto" />
+ 
+                <div class="grid">
+                    <a role="button" href="/index.html" class="outline">cancelar</a>
+                    <button onclick="cadastrarJogador()">cadastrar</button>
+                </div>
+            </article>
+ 
+        </section>
+    </main>
+ 
+    <script>
+        // Função para incrementar o número de gols
+        function incrementGols() {
+            const golsInput = document.getElementById('gols');
+            golsInput.value = parseInt(golsInput.value) + 1;
+        }
+ 
+        // Função para decrementar o número de gols
+        function decrementGols() {
+            const golsInput = document.getElementById('gols');
+            const gols = parseInt(golsInput.value);
+            if (gols > 0) {
+                golsInput.value = gols - 1;
+            }
+        }
+ 
+        // Função para incrementar o número de assistências
+        function incrementAssistencias() {
+            const assistenciasInput = document.getElementById('assistencias');
+            assistenciasInput.value = parseInt(assistenciasInput.value) + 1;
+        }
+ 
+        // Função para decrementar o número de assistências
+        function decrementAssistencias() {
+            const assistenciasInput = document.getElementById('assistencias');
+            const assistencias = parseInt(assistenciasInput.value);
+            if (assistencias > 0) {
+                assistenciasInput.value = assistencias - 1;
+            }
+        }
+ 
+        // Função para cadastrar um novo jogador na lista
+        function cadastrarJogador() {
+            const nomeInput = document.getElementById('nome');
+            const timeInput = document.getElementById('time');
+            const golsInput = document.getElementById('gols');
+            const assistenciasInput = document.getElementById('assistencias');
+            const fotoInput = document.getElementById('foto');
+ 
+            // Verifica se todos os campos estão preenchidos
+            if (nomeInput.value && timeInput.value && fotoInput.value) {
+                const jogadoresSection = document.querySelector('section');
+ 
+                // Cria um novo elemento article
+                const article = document.createElement('article');
+                article.classList.add('data');
+ 
+                // Monta o HTML do jogador
+                article.innerHTML = `
+<div>
+<img src="${fotoInput.value}" alt="foto do jogador" class="avatar">
+<h3>${nomeInput.value}</h3>
+</div>
+<div>
+<p class="row">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-shield-half">
+<path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z" />
+<path d="M12 22V2" />
+</svg>
+                    ${timeInput.value}
+</p>
+<p class="row">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#ffd91a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-star">
+<polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+</svg>
+                    ${golsInput.value}
+</p>
+<p class="row">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-award">
+<circle cx="12" cy="8" r="7" />
+<polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88" />
+</svg>
+                    ${assistenciasInput.value} assistências
+</p>
+</div>
+ 
+<button class="pico-background-pink-600" onclick="apagarJogador(this)">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-trash">
+<path d="M3 6h18" />
+<path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6" />
+<path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2" />
+</svg>
+                    apagar
+</button>
+`;
+ 
+                // Adiciona o article à section
+                jogadoresSection.appendChild(article);
+ 
+                // Limpa os campos do formulário
+                nomeInput.value = '';
+                timeInput.value = '';
+                golsInput.value = '';
+                assistenciasInput.value = '';
+                fotoInput.value = '';
+            } else {
+                // Caso algum campo esteja vazio, exibe um alerta
+                alert('Por favor, preencha todos os campos.');
+            }
+        }
+ 
+        // Função para apagar um jogador da lista
+        function apagarJogador(button) {
+            const article = button.parentElement;
+            article.remove();
+        }
+    </script>
+ 
+</body>
+ 
+</html>
